@@ -223,7 +223,8 @@ module Async
 
       def resume_waiting
         while !blocking? && (fiber = @waiting.shift)
-          fiber.transfer if fiber.alive?
+          #fiber.transfer if fiber.alive?
+          Fiber.yield if fiber.alive?
         end
 
         # Long running non-burstable tasks may end while
